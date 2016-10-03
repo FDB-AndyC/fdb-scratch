@@ -1,9 +1,9 @@
 ﻿// -------------------------public -------------------------------------------------------------------------------------------
-// <copyright file="ITicketReader.cs" company="Map Of Medicine">
+// <copyright file="IProject.cs" company="Map Of Medicine">
 //   Copyright (c) 2016 Map Of Medicine. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the ITicketReader type.
+//   Defines the IProject type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,14 +11,20 @@ namespace Contracts
 {
     using System.Collections.Generic;
 
-    public interface ITicketReader
+    public interface IProject
     {
-        IEnumerable<IOrganisation> GetOrganisations();
+        IOrganisation Organisation { get; }
 
-        IEnumerable<IProject> GetProjects(IOrganisation organisation);
+        int Id { get; }
 
-        IEnumerable<IStory> GetStories(IProject project);
+        string Category { get; }
 
-        IEnumerable<IIteration> GetIterations(IProject project);
+        string Description { get; }
+
+        IEnumerable<string> Tags { get; }
+
+        string ShortName { get; }
+
+        string LongName { get; }
     }
 }
