@@ -1,3 +1,3 @@
 # blah
 
-And some text.
+And some feature text.
