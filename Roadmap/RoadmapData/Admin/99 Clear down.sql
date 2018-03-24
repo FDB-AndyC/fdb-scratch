@@ -1,0 +1,4 @@
+DELETE FROM Deliverable
+DELETE FROM Swimlane
+DELETE FROM Roadmap
+DELETE FROM Category

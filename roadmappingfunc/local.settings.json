@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_EXTENSION_VERSION": "~1",
+    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=roadmappingfuncstorage;AccountKey=GZKrm4LpYf3jGUu1/W1wcuqnJJ46SK81g2S1XO+mH9Vo4lRrR4tN8M4PL88a0yECeiV97VKFyymmNrZ0CgmbUQ==",
+    "WEBSITE_SITE_NAME": "roadmappingfunc",
+    "WEBSITE_AUTH_ENABLED": "False",
+    "REMOTEDEBUGGINGVERSION": "15.0.26730.8",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=roadmappingfuncstorage;AccountKey=GZKrm4LpYf3jGUu1/W1wcuqnJJ46SK81g2S1XO+mH9Vo4lRrR4tN8M4PL88a0yECeiV97VKFyymmNrZ0CgmbUQ==",
+    "ScmType": "None",
+    "WEBSITE_CONTENTSHARE": "roadmappingfunc84af",
+    "WEBSITE_SLOT_NAME": "Production",
+    "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+    "AzureWebJobsDashboard": "DefaultEndpointsProtocol=https;AccountName=roadmappingfuncstorage;AccountKey=GZKrm4LpYf3jGUu1/W1wcuqnJJ46SK81g2S1XO+mH9Vo4lRrR4tN8M4PL88a0yECeiV97VKFyymmNrZ0CgmbUQ=="
+  }
+}
