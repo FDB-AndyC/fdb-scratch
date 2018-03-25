@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RoadmapData.Models
 {
-    public partial class Roadmap
+    public partial class Deliverable
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

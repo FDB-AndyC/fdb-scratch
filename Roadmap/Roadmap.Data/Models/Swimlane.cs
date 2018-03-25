@@ -7,13 +7,15 @@ namespace RoadmapData.Models
     {
         public Swimlane()
         {
-            Roadmap = new HashSet<Roadmap>();
+            Deliverable = new HashSet<Deliverable>();
         }
 
         public Guid Id { get; set; }
+        public Guid RoadmapId { get; set; }
         public string Name { get; set; }
         public int SortOrder { get; set; }
 
-        public ICollection<Roadmap> Roadmap { get; set; }
+        public Roadmap Roadmap { get; set; }
+        public ICollection<Deliverable> Deliverable { get; set; }
     }
 }

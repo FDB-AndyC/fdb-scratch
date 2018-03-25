@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roadmap", "Roadmap\Roadmap.csproj", "{25FB34F9-1FA2-4077-82EA-10746DD85CDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roadmap.UI", "Roadmap.UI\Roadmap.UI.csproj", "{25FB34F9-1FA2-4077-82EA-10746DD85CDE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadmapCore", "RoadmapCore\RoadmapCore.csproj", "{D62341A3-E105-4DA0-9E8C-7D501CCBE110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roadmap.Core", "Roadmap.Core\Roadmap.Core.csproj", "{D62341A3-E105-4DA0-9E8C-7D501CCBE110}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadmapModels", "RoadmapModels\RoadmapModels.csproj", "{DE49B270-3933-4054-BC83-4F2808F31AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roadmap.Models", "Roadmap.Models\Roadmap.Models.csproj", "{DE49B270-3933-4054-BC83-4F2808F31AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadmapData", "RoadmapData\RoadmapData.csproj", "{294FA050-8992-43E5-9089-5719DAA5C0B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roadmap.Data", "Roadmap.Data\Roadmap.Data.csproj", "{294FA050-8992-43E5-9089-5719DAA5C0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters", "Converters\Converters.csproj", "{3032E25F-EF8D-4908-95F6-89D39A560E79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roadmap.Converters", "Roadmap.Converters\Roadmap.Converters.csproj", "{3032E25F-EF8D-4908-95F6-89D39A560E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

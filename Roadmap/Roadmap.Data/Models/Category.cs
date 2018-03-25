@@ -7,13 +7,13 @@ namespace RoadmapData.Models
     {
         public Category()
         {
-            Roadmap = new HashSet<Roadmap>();
+            Deliverable = new HashSet<Deliverable>();
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int? ColourIndex { get; set; }
 
-        public ICollection<Roadmap> Roadmap { get; set; }
+        public ICollection<Deliverable> Deliverable { get; set; }
     }
 }

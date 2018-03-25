@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoadmapData\RoadmapData.csproj" />
-    <ProjectReference Include="..\RoadmapModels\RoadmapModels.csproj" />
+    <ProjectReference Include="..\Roadmap.Data\Roadmap.Data.csproj" />
+    <ProjectReference Include="..\Roadmap.Models\Roadmap.Models.csproj" />
   </ItemGroup>
 
 </Project>

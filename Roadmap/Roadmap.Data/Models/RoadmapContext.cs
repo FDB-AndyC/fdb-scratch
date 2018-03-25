@@ -5,6 +5,7 @@
     public partial class RoadmapContext : DbContext
     {
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Deliverable> Deliverable { get; set; }
         public virtual DbSet<Roadmap> Roadmap { get; set; }
         public virtual DbSet<Swimlane> Swimlane { get; set; }
 
@@ -33,7 +34,7 @@
                     .HasMaxLength(256);
             });
 
-            modelBuilder.Entity<Roadmap>(entity =>
+            modelBuilder.Entity<Deliverable>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -46,16 +47,25 @@
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Roadmap)
+                    .WithMany(p => p.Deliverable)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Roadmap_Category");
+                    .HasConstraintName("FK_Deliverable_Category");
 
                 entity.HasOne(d => d.Swimlane)
-                    .WithMany(p => p.Roadmap)
+                    .WithMany(p => p.Deliverable)
                     .HasForeignKey(d => d.SwimlaneId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Roadmap_Swimlane");
+                    .HasConstraintName("FK_Deliverable_Swimlane");
+            });
+
+            modelBuilder.Entity<Roadmap>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
             });
 
             modelBuilder.Entity<Swimlane>(entity =>
@@ -65,6 +75,12 @@
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(256);
+
+                entity.HasOne(d => d.Roadmap)
+                    .WithMany(p => p.Swimlane)
+                    .HasForeignKey(d => d.RoadmapId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Swimlane_Roadmap");
             });
         }
     }
