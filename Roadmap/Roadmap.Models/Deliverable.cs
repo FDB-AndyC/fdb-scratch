@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace RoadmapModels
+﻿namespace Roadmap.Models
 {
+    using System;
+
     public class Deliverable
     {
         public Guid Id { get; set; }

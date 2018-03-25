@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RoadmapModels
+﻿namespace Roadmap.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Roadmap
     {
         public Guid Id { get; set; }

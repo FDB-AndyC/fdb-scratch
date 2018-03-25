@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RoadmapData.Models
+namespace Roadmap.Data.Models
 {
     public partial class Roadmap
     {
         public Roadmap()
         {
+            Milestone = new HashSet<Milestone>();
             Swimlane = new HashSet<Swimlane>();
         }
 
@@ -14,6 +15,7 @@ namespace RoadmapData.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public ICollection<Milestone> Milestone { get; set; }
         public ICollection<Swimlane> Swimlane { get; set; }
     }
 }

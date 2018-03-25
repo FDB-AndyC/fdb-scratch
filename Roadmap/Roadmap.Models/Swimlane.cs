@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace RoadmapModels
+﻿namespace Roadmap.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Swimlane
     {
         public Guid Id { get; set; }

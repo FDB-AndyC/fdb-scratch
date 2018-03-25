@@ -1,16 +1,16 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-
-namespace Converters
+﻿namespace Roadmap.Converters
 {
-    using ModelRoadmap = RoadmapModels.Roadmap;
-    using DataRoadmap = RoadmapData.Models.Roadmap;
-    using ModelCategory = RoadmapModels.Category;
-    using DataCategory = RoadmapData.Models.Category;
-    using ModelSwimlane = RoadmapModels.Swimlane;
-    using DataSwimlane = RoadmapData.Models.Swimlane;
-    using ModelDeliverable = RoadmapModels.Deliverable;
-    using DataDeliverable = RoadmapData.Models.Deliverable;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
+    using ModelRoadmap = Models.Roadmap;
+    using DataRoadmap = Data.Models.Roadmap;
+    using ModelCategory = Models.Category;
+    using DataCategory = Data.Models.Category;
+    using ModelSwimlane = Models.Swimlane;
+    using DataSwimlane = Data.Models.Swimlane;
+    using ModelDeliverable = Models.Deliverable;
+    using DataDeliverable = Data.Models.Deliverable;
 
     public static class DataConverter
     {

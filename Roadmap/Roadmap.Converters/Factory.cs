@@ -1,10 +1,10 @@
-﻿namespace Converters
+﻿namespace Roadmap.Converters
 {
     using System.Collections.Generic;
     using System.Linq;
-    using RoadmapData.Models;
+    using Data.Models;
 
-    using ModelRoadmap = RoadmapModels.Roadmap;
+    using ModelRoadmap = Models.Roadmap;
 
     public interface IDataFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RoadmapData.Models
+namespace Roadmap.Data.Models
 {
     public partial class Swimlane
     {

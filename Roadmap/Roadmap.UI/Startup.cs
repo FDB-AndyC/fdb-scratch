@@ -1,14 +1,13 @@
-using Converters;
-using Microsoft.EntityFrameworkCore;
-
-namespace Roadmap
+namespace Roadmap.UI
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.SpaServices.Webpack;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using RoadmapData.Models;
+    using Converters;
+    using Data.Models;
 
     public class Startup
     {

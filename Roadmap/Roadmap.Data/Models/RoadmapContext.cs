@@ -1,4 +1,4 @@
-﻿namespace RoadmapData.Models
+﻿namespace Roadmap.Data.Models
 {
     using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +6,7 @@
     {
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Deliverable> Deliverable { get; set; }
+        public virtual DbSet<Milestone> Milestone { get; set; }
         public virtual DbSet<Roadmap> Roadmap { get; set; }
         public virtual DbSet<Swimlane> Swimlane { get; set; }
 
