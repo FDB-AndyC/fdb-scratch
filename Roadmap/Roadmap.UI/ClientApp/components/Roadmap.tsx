@@ -37,8 +37,6 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Start</th>
-                    <th>End</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,8 +44,6 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
                 <tr key={ roadmap.id}>
                     <td>{ roadmap.name }</td>
                     <td>{ roadmap.description }</td>
-                    <td>{ roadmap.startDate }</td>
-                    <td>{ roadmap.endDate }</td>
                 </tr>
             )}
             </tbody>
@@ -59,7 +55,4 @@ interface Roadmap {
     id:string;
     name: string;
     description: string;
-    startDate: string;
-    endDate: string;
-
 }
