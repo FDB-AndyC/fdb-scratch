@@ -11,17 +11,24 @@
     using DataSwimlane = Data.Models.Swimlane;
     using ModelDeliverable = Models.Deliverable;
     using DataDeliverable = Data.Models.Deliverable;
+    using ModelMilestone= Models.Milestone;
+    using DataMilestone= Data.Models.Milestone;
+
 
     public static class DataConverter
     {
         public static ModelRoadmap ToModel(this DataRoadmap dataModel)
         {
-            return new ModelRoadmap
-            {
-                Id = dataModel.Id,
-                Name = dataModel.Name,
-                Description = dataModel.Description
-            };
+            return dataModel == null
+                ? null
+                : new ModelRoadmap
+                {
+                    Id = dataModel.Id,
+                    Name = dataModel.Name,
+                    Description = dataModel.Description,
+                    Swimlanes = new Collection<ModelSwimlane>(dataModel.Swimlane.Select(dr => dr.ToModel()).ToList()),
+                    Milestones = new Collection<ModelMilestone>(dataModel.Milestone.Select(dm => dm.ToModel()).ToList())
+                };
         }
 
         public static ModelCategory ToModel(this DataCategory dataModel)
@@ -55,6 +62,16 @@
                 StartDate = dataModel.StartDate,
                 EndDate = dataModel.EndDate,
                 Category = dataModel.Category.ToModel()
+            };
+        }
+
+        public static ModelMilestone ToModel(this DataMilestone dataModel)
+        {
+            return new ModelMilestone
+            {
+                Id = dataModel.Id,
+                Name = dataModel.Name,
+                EventDate = dataModel.EventDate
             };
         }
     }

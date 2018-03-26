@@ -12,6 +12,5 @@
         public int SortOrder { get; set; }
 
         public ICollection<Deliverable> Deliverables { get; set; }
-
     }
 }

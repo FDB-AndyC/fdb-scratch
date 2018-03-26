@@ -1,8 +1,10 @@
-﻿namespace Roadmap.Data.Models
-{
-    using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-    public partial class RoadmapContext : DbContext
+namespace Roadmap.Data.Models
+{
+    public partial class Roadmap01Context : DbContext
     {
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Deliverable> Deliverable { get; set; }
@@ -10,18 +12,13 @@
         public virtual DbSet<Roadmap> Roadmap { get; set; }
         public virtual DbSet<Swimlane> Swimlane { get; set; }
 
-        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //        {
-        //            if (!optionsBuilder.IsConfigured)
-        //            {
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-        //                optionsBuilder.UseSqlServer(@"Server=.\SQL2017;Database=Roadmap01;Trusted_Connection=True;");
-        //            }
-        //        }
-
-        public RoadmapContext(DbContextOptions<RoadmapContext> options)
-            : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer(@"Server=.\SQL2017;Database=Roadmap01;Trusted_Connection=True;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -12,7 +12,7 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
         super();
         this.state = { roadmaps: [], loading: true };
 
-        fetch('api/Roadmap/GetAll')
+        fetch('api/Roadmaps/GetAll')
             .then(response => response.json() as Promise<Roadmap[]>)
             .then(data => {
                 this.setState({ roadmaps: data, loading: false });
@@ -41,8 +41,8 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
             </thead>
             <tbody>
             {roadmaps.map(roadmap =>
-                <tr key={ roadmap.id}>
-                    <td>{ roadmap.name }</td>
+                    <tr key={roadmap.id}>
+                        <td><a href={"Roadmap?id=" + roadmap.id}>{ roadmap.name }</a></td>
                     <td>{ roadmap.description }</td>
                 </tr>
             )}

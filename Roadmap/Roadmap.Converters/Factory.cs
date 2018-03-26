@@ -1,4 +1,6 @@
-﻿namespace Roadmap.Converters
+﻿using System;
+
+namespace Roadmap.Converters
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,6 +11,8 @@
     public interface IDataFactory
     {
         IEnumerable<ModelRoadmap> GetAllRoadmaps();
+
+        ModelRoadmap GetRoadmap(Guid id);
     }
 
     public class DataFactory : IDataFactory
@@ -27,6 +31,17 @@
                     select r.ToModel();
 
             return roadmaps.AsEnumerable();
+        }
+
+        public ModelRoadmap GetRoadmap(Guid id)
+        {
+            var dataRoadmap =
+                (from r in this.DatabaseContext.Roadmap
+                    where r.Id.Equals(id)
+                    select r)
+                .SingleOrDefault();
+
+            return dataRoadmap.ToModel();
         }
     }
 }
