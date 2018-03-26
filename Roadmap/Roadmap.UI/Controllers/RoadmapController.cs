@@ -5,6 +5,7 @@ namespace Roadmap.UI.Controllers
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Converters;
+    using Models;
 
     [Route("api/[controller]")]
     public class RoadmapController : Controller
@@ -23,7 +24,7 @@ namespace Roadmap.UI.Controllers
         ////}
 
         [HttpGet("[action]")]
-        public IEnumerable<Models.Roadmap> Roadmaps()
+        public IEnumerable<Roadmap> GetAll()
         {
             return this.DataFactory.GetAllRoadmaps();
         }
