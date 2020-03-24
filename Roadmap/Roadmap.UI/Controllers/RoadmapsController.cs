@@ -24,6 +24,11 @@ namespace Roadmap.UI.Controllers
             return View();
         }
 
+        public IActionResult Index(Guid id)
+        {
+            return View();
+        }
+
         [HttpGet("[action]")]
         public IEnumerable<Roadmap> GetAll()
         {

@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import * as DataStructures from "./data-structures";
+import IRoadmap = DataStructures.IRoadmap;
 
 interface RoadmapState {
-    roadmaps: Roadmap[];
+    roadmaps: IRoadmap[];
     loading: boolean;
 }
 
@@ -13,7 +16,7 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
         this.state = { roadmaps: [], loading: true };
 
         fetch('api/Roadmaps/GetAll')
-            .then(response => response.json() as Promise<Roadmap[]>)
+            .then(response => response.json() as Promise<IRoadmap[]>)
             .then(data => {
                 this.setState({ roadmaps: data, loading: false });
             });
@@ -31,7 +34,7 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
         </div>;
     }
 
-    private static renderRoadmaps(roadmaps: Roadmap[]) {
+    private static renderRoadmaps(roadmaps: IRoadmap[]) {
         return <table className='table'>
             <thead>
                 <tr>
@@ -42,7 +45,10 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
             <tbody>
             {roadmaps.map(roadmap =>
                     <tr key={roadmap.id}>
-                        <td><a href={"Roadmap?id=" + roadmap.id}>{ roadmap.name }</a></td>
+                        <td><NavLink to={'/roadmap'} exact activeClassName='active'>
+                            <span className='glyphicon glyphicon-home'></span> {roadmap.name}
+                            </NavLink>
+                            <a href={"Roadmap?id=" + roadmap.id}>{roadmap.name}</a></td>
                     <td>{ roadmap.description }</td>
                 </tr>
             )}
@@ -51,8 +57,8 @@ export class Roadmaps extends React.Component<RouteComponentProps<{}>, RoadmapSt
     }
 }
 
-interface Roadmap {
-    id:string;
-    name: string;
-    description: string;
-}
+//interface Roadmap {
+//    id:string;
+//    name: string;
+//    description: string;
+//}

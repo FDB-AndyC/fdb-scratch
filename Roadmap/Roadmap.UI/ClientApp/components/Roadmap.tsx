@@ -2,6 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import 'query-string';
+import * as DataStructures from "./data-structures";
+import IRoadmap = DataStructures.IRoadmap;
 
 interface IState {
     roadmap: IRoadmap | null;
@@ -12,9 +14,11 @@ export class Roadmap extends React.Component<RouteComponentProps<{}>, IState> {
     constructor() {
         super();
         this.state = { roadmap: null, loading: true };
-        console.log(this.props.location.search);
+        // console.log(this.props.location.search);
+        console.log('props:' + this.props);
+        //console.log('roadmap id: ' + this.props.roadmap.id);
 
-        fetch('api/Roadmap/GetRoadmap')
+        fetch('api/Roadmaps/GetRoadmap')
             .then(response => response.json() as Promise<IRoadmap>)
             .then(data => {
                 this.setState({ roadmap: data, loading: false });
@@ -42,46 +46,11 @@ export class Roadmap extends React.Component<RouteComponentProps<{}>, IState> {
                 </tr>
             </thead>
             <tbody>
-                <tr key={ roadmap.id}>
+                <tr key={ roadmap.id }>
                     <td>{ roadmap.name }</td>
                     <td>{ roadmap.description }</td>
                 </tr>
             </tbody>
         </table>;
     }
-}
-
-interface IRoadmap {
-    id:string;
-    name: string;
-    description: string;
-    swimlanes: ISwimlane[];
-    milestones: IMilestone[];
-}
-
-interface ISwimlane {
-    id: string;
-    name: string;
-    deliverables: IDeliverable[];
-}
-
-interface IMilestone {
-    id: string;
-    name: string;
-    eventDate: string;
-}
-
-interface IDeliverable {
-    id: string;
-    name: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    category: ICategory;
-}
-
-interface ICategory {
-    id: string;
-    name: string;
-    colourIndex: number;
 }
