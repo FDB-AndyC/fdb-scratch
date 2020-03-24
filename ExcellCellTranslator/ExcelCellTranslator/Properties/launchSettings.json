@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ExcelCellTranslator": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\collyeran01\\Desktop\\Chongqing insurance drug list 201909s _ filtered on type code 11.xlsx\" \"C:\\Users\\collyeran01\\Desktop\\rerun.xlsx\""
+    }
+  }
+}
