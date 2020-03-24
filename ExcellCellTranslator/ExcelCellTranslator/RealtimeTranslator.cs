@@ -9,7 +9,7 @@ using TranslationService;
 
 namespace ExcelCellTranslator
 {
-    internal class MainTranslator
+    internal class RealtimeTranslator
     {
         private const int MaxRetryCount = 10;
         private const int RetryPauseSeconds = 10;
@@ -19,7 +19,7 @@ namespace ExcelCellTranslator
         private readonly ILanguageTranslator Translator;
         private readonly IFeedbackReceiver FeedbackReceiver;
 
-        public MainTranslator(string inputFilename, string outputFilename, ILanguageTranslator languageTranslator,
+        public RealtimeTranslator(string inputFilename, string outputFilename, ILanguageTranslator languageTranslator,
             IFeedbackReceiver feedbackReceiver)
         {
             this.InputFilename = inputFilename;

@@ -29,7 +29,7 @@ namespace ExcelCellTranslator
             try
             {
                 var translator =
-                    new MainTranslator(inputFilename, outputFilename, languageTranslator, feedbackReceiver);
+                    new RealtimeTranslator(inputFilename, outputFilename, languageTranslator, feedbackReceiver);
 
                 translator.TranslateFile();
             }
