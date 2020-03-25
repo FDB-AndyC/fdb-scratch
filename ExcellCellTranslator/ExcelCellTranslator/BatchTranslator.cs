@@ -39,13 +39,19 @@ namespace ExcelCellTranslator
 
         private SqlConnection ConnectToDatabase()
         {
-            return new SqlConnection(this.DatabaseConnectionString);
+            var connection = new SqlConnection(this.DatabaseConnectionString);
+
+            connection.Open();
+
+            return connection;
         }
 
         private void Import()
         {
             var input = new XSSFWorkbook(this.InputFilename);
             IWorkbookIterator worker = new WorkbookCellIterator(input, this.ImportCell, this.FeedbackReceiver);
+
+            worker.Iterate();
 
             throw new NotImplementedException();
         }

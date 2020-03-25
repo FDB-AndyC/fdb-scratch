@@ -2,7 +2,7 @@
   "profiles": {
     "ExcelCellTranslator": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\collyeran01\\Desktop\\Chongqing insurance drug list 201909s _ filtered on type code 11.xlsx\" \"C:\\Users\\collyeran01\\Desktop\\rerun.xlsx\""
+      "commandLineArgs": "\"C:\\Users\\CollyerAn01\\OneDrive - Hearst\\Transfer\\Chongqing insurance drug list 201909s type code 11.xlsx\" \"C:\\Users\\collyeran01\\Desktop\\Chongqing output.xlsx\""
     }
   }
 }
