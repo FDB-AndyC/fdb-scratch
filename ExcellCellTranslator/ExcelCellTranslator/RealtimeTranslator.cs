@@ -9,26 +9,15 @@ using TranslationService;
 
 namespace ExcelCellTranslator
 {
-    internal class RealtimeTranslator
+    internal class RealtimeTranslator : TranslatorBase
     {
-        private const int MaxRetryCount = 10;
-        private const int RetryPauseSeconds = 10;
-
-        private readonly string InputFilename;
-        private readonly string OutputFilename;
-        private readonly ILanguageTranslator Translator;
-        private readonly IFeedbackReceiver FeedbackReceiver;
-
         public RealtimeTranslator(string inputFilename, string outputFilename, ILanguageTranslator languageTranslator,
-            IFeedbackReceiver feedbackReceiver)
+            IFeedbackReceiver feedbackReceiver) 
+            : base(inputFilename, outputFilename, languageTranslator, feedbackReceiver)
         {
-            this.InputFilename = inputFilename;
-            this.OutputFilename = outputFilename;
-            this.Translator = languageTranslator;
-            this.FeedbackReceiver = feedbackReceiver;
         }
 
-        public void TranslateFile()
+        public override void Translate()
         {
             using var outputStream = File.Create(this.OutputFilename);
             var input = new XSSFWorkbook(this.InputFilename);

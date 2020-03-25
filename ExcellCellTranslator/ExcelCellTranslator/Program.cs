@@ -7,6 +7,9 @@ namespace ExcelCellTranslator
 {
     class Program
     {
+        private const string DbConnectionString =
+            "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService";
+
         static void Main(string[] args)
         {
             IFeedbackReceiver feedbackReceiver = new ConsoleFeedbackReceiver();
@@ -29,9 +32,10 @@ namespace ExcelCellTranslator
             try
             {
                 var translator =
-                    new RealtimeTranslator(inputFilename, outputFilename, languageTranslator, feedbackReceiver);
+                    //new RealtimeTranslator(inputFilename, outputFilename, languageTranslator, feedbackReceiver);
+                    new BatchTranslator(inputFilename, outputFilename, DbConnectionString, languageTranslator, feedbackReceiver);
 
-                translator.TranslateFile();
+                translator.Translate();
             }
             catch (Exception x)
             {
