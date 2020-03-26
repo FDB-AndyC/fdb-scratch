@@ -17,5 +17,12 @@ namespace TranslationService
 
             return results.Select(r => r.TranslatedText).ToList();
         }
+
+        public string Translate(string input)
+        {
+            var result = Translator.TranslateText(input, LanguageCodes.English);
+            
+            return result.TranslatedText;
+        }
     }
 }

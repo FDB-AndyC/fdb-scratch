@@ -8,7 +8,7 @@ namespace ExcelCellTranslator
     class Program
     {
         private const string DbConnectionString =
-            "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService";
+            "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1";
 
         static void Main(string[] args)
         {
@@ -16,9 +16,11 @@ namespace ExcelCellTranslator
             ILanguageTranslator translator = new ToEnglishTranslator();
             //ILanguageTranslator translator = new CloneTranslator();
 
-            if (args.Length == 2)
+            var arguments = ProcessedArguments.Process(args);
+
+            if (arguments.Filenames.Count == 2)
             {
-                TranslateFile(args[0], args[1], translator, feedbackReceiver);
+                TranslateFile(arguments, translator, feedbackReceiver);
             }
             else
             {
@@ -26,7 +28,7 @@ namespace ExcelCellTranslator
             }
         }
 
-        private static void TranslateFile(string inputFilename, string outputFilename, ILanguageTranslator languageTranslator,
+        private static void TranslateFile(ProcessedArguments arguments, ILanguageTranslator languageTranslator,
             IFeedbackReceiver feedbackReceiver)
         {
             try

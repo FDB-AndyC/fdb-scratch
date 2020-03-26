@@ -1,107 +1,99 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Threading;
 using ExcelService;
+using Google;
+using Google.Apis.Http;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using TranslationService;
 
 namespace ExcelCellTranslator
 {
-    public class BatchTranslator : TranslatorBase
+    public class BatchTranslator : DatabaseTranslator, IBatchProcessor
     {
-        private readonly string DatabaseConnectionString;
-        private SqlConnection CachedConnection;
+        private const int ApiBatchSize = 10000;
+        private const int MaxRetryCount = 10;
+        private const int RetryPauseSeconds = 10;
 
-        public BatchTranslator(string inputFilename, string outputFilename, string connectionString, ILanguageTranslator languageTranslator,
+        private readonly ILanguageTranslator Translator;
+
+        public BatchTranslator(SqlConnection connection, ILanguageTranslator languageTranslator,
             IFeedbackReceiver feedbackReceiver) 
-            : base(inputFilename, outputFilename, languageTranslator, feedbackReceiver)
+            : base(connection, feedbackReceiver)
         {
-            this.DatabaseConnectionString = connectionString;
+            this.Translator = languageTranslator;
         }
 
-        public override void Translate()
+        public void Execute()
         {
-            using var connection = ConnectToDatabase();
+            var continueProcessing = true;
 
-            this.CachedConnection = connection;
-            Import();
-            Process();
-            Export();
-            this.CachedConnection = null;
-            DisconnectFromDatabase(connection);
+            while (continueProcessing)
+            {
+                var batch = GetNextProcessingBatch(CommandBuilder.GenerateGetNextImportedBatchCommand);
+
+                continueProcessing = batch.Count > 0;
+
+                if (continueProcessing)
+                {
+                    var translated = ProcessBatch(batch);
+                    UpdateProcessedBatch(translated);
+                }
+            }
         }
 
-        private static void DisconnectFromDatabase(IDbConnection connection)
+        private void UpdateProcessedBatch(IList<TranslationData> batch)
         {
-            connection.Close();
+            foreach (var workItem in batch)
+            {
+                UpdateProcessedItem(workItem);
+            }
         }
 
-        private SqlConnection ConnectToDatabase()
+        private void UpdateProcessedItem(TranslationData workItem)
         {
-            var connection = new SqlConnection(this.DatabaseConnectionString);
+            this.FeedbackReceiver.Message($"Processing {workItem.SheetName}.R{workItem.RowId}C{workItem.ColumnId}");
 
-            connection.Open();
-
-            return connection;
-        }
-
-        private void Import()
-        {
-            var input = new XSSFWorkbook(this.InputFilename);
-            IWorkbookIterator worker = new WorkbookCellIterator(input, this.ImportCell, this.FeedbackReceiver);
-
-            worker.Iterate();
-
-            throw new NotImplementedException();
-        }
-
-        private void ImportCell(ICell cell)
-        {
-            using var command = CreateImportCommand(cell);
+            using var command = CachedConnection.GenerateProcessedInsertCommand(workItem);
 
             command.ExecuteNonQuery();
         }
 
-        private SqlCommand CreateImportCommand(ICell cell)
+        private IList<TranslationData> ProcessBatch(IList<TranslationData> batch)
         {
-            var command = this.CachedConnection.CreateCommand();
+            var translated = new List<TranslationData>(batch.Count);
 
-            command.CommandText = $"INSERT INTO [Imported] ([SheetName], [RowId], [ColumnId], [Text]) VALUES @SheetName, @RowId, @ColumnId, @ImportText";
+            foreach (var workItem in batch)
+            {
+                translated.Add(workItem.Morph(ExecuteTranslate(workItem.Text)));
+            }
 
-            command.Parameters.Add("SheetName", SqlDbType.NVarChar, 256).Value = cell.Sheet.SheetName;
-            command.Parameters.Add("RowId", SqlDbType.Int).Value = cell.RowIndex;
-            command.Parameters.Add("ColumnId", SqlDbType.Int).Value = cell.ColumnIndex;
-            command.Parameters.Add("ImportText", SqlDbType.NVarChar, -1).Value = cell.StringCellValue;
-
-            return command;
+            return translated;
         }
 
-        private void Process()
+        private string ExecuteTranslate(string source)
         {
-            throw new NotImplementedException();
-        }
+            var retries = 0;
 
-        private void Export()
-        {
-            //var continueProcessing = true;
+            do
+            {
+                try
+                {
+                    return this.Translator.Translate(source);
+                }
+                catch (GoogleApiException gax)
+                {
+                    this.FeedbackReceiver.Error($"{retries + 1}/{MaxRetryCount} - {gax.Message}");
+                    Thread.Sleep(RetryPauseSeconds * 1000);
+                }
+            } while (++retries < MaxRetryCount);
 
-            //while (continueProcessing)
-            //{
-            //    var batch = GetNextProcessingBatch(connection);
-
-            //    continueProcessing = batch.Length() > 0;
-
-            //    if (continueProcessing)
-            //        this.ProcessBatch(batch);
-            //}
-
-            throw new NotImplementedException();
-        }
-
-        private object GetNextProcessingBatch()
-        {
-            throw new NotImplementedException();
+            throw new Exception("Translation API retry limit exceeded");
         }
     }
 }
