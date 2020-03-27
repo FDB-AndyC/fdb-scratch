@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using NPOI.SS.UserModel;
 
 namespace ExcelCellTranslator
@@ -37,16 +35,6 @@ namespace ExcelCellTranslator
 
             return command;
         }
-
-        ////public static SqlCommand GenerateGetNextProcessedBatchCommand(this SqlConnection connection, int batchSize)
-        ////{
-        ////    var command = connection.CreateCommand();
-
-        ////    command.CommandText =
-        ////        $"SELECT TOP({batchSize}) SELECT TOP 1000 [i].[SheetName], [i].[RowId], [i].[ColumnId], ISNULL([p].[Text], [i].[Text]) AS [Text] FROM [Translations].[dbo].[Imported] AS[i] LEFT OUTER JOIN [Processed] AS [p] ON [i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId]";
-
-        ////    return command;
-        ////}
 
         public static SqlCommand GenerateGetNextProcessedRowCommand(this SqlConnection connection, string sheetName,
             int rowId)

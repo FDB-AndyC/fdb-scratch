@@ -34,7 +34,6 @@ namespace ExcelService
                 var inputSheet = InputWorkbook.GetSheetAt(sheetIndex);
                 var outputSheet = this.OutputWorkbook.CreateSheet(inputSheet.SheetName);
 
-                //this.FeedbackReceiver.Progress((decimal)(sheetIndex+1)/numSheets);
                 this.FeedbackReceiver.Message($"Processing sheet {sheetIndex+1} of {numSheets}");
                 this.IterateCellsInSheet(inputSheet, outputSheet);
             }

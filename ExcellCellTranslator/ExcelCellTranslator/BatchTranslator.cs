@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading;
 using ExcelService;
 using Google;
-using Google.Apis.Http;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using TranslationService;
 
 namespace ExcelCellTranslator
 {
     public class BatchTranslator : DatabaseTranslator, IBatchProcessor
     {
-        private const int ApiBatchSize = 10000;
         private const int MaxRetryCount = 10;
         private const int RetryPauseSeconds = 10;
 
