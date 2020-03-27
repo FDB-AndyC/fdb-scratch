@@ -32,6 +32,7 @@ namespace ExcelCellTranslator
         public void Execute()
         {
             var continueProcessing = true;
+            var processed = 0;
 
             while (continueProcessing)
             {
@@ -41,8 +42,10 @@ namespace ExcelCellTranslator
 
                 if (continueProcessing)
                 {
+                    FeedbackReceiver.Message($"Processing items {processed+1}..{processed+batch.Count}");
                     var translated = ProcessBatch(batch);
                     UpdateProcessedBatch(translated);
+                    processed += batch.Count;
                 }
             }
         }

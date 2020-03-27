@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using ExcelService;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -22,28 +20,82 @@ namespace ExcelCellTranslator
 
         public void Execute()
         {
-            var continueProcessing = true;
             var workbook = new XSSFWorkbook();
             var stats = FetchStatistics();
-            var rowId = 0;
-            string cachedSheetName = string.Empty;
+            ISheet currentSheet = null;
+            int rowId = 0;
 
             if (stats == null)
+            {
+                FeedbackReceiver.Message("Nothing to process");
                 return;
+            }
 
             foreach (var rowStats in stats)
             {
-                var rowData = FetchRowData(rowStats);
-
-                if (string.Compare(rowStats.SheetName, cachedSheetName, StringComparison.Ordinal) != 0)
+                if (currentSheet == null || string.CompareOrdinal(currentSheet.SheetName, rowStats.SheetName) != 0)
                 {
-                    CreateSheet(rowStats.SheetName, workbook);
+                    currentSheet = workbook.CreateSheet(rowStats.SheetName);
                 }
 
-                if (ValidateRow(rowStats, rowData))
-                    ExportRow(rowData, workbook);
+                ProcessRow(rowStats, rowId++, currentSheet);
+            }
+
+            SaveWorkbook(workbook);
+        }
+
+        private void SaveWorkbook(XSSFWorkbook workbook)
+        {
+            using var outputStream = File.Create(this.OutputFilename);
+
+            workbook.Write(outputStream);
+            workbook.Close();
+        }
+
+        private void ProcessRow(ImportedRowStatistics rowStats, in int rowId, ISheet worksheet)
+        {
+            FeedbackReceiver.Message($"Processing row {rowStats.SheetName}.{rowStats.RowId} ({rowStats.CellCount} cells)");
+            var rowData = FetchRowData(rowStats);
+
+            if (rowId != rowStats.RowId)
+                InsertBlankRow(worksheet, rowId);
+            else if (ValidateRow(rowStats, rowData))
+                ExportRow(rowData, worksheet, rowId);
+            else
+                InsertDummyRow(worksheet, rowId);
+        }
+
+        private void InsertDummyRow(ISheet worksheet, in int rowId)
+        {
+            var row = worksheet.CreateRow(rowId);
+
+            row.CreateCell(0).SetCellValue("Dummy");
+        }
+
+        private void InsertBlankRow(ISheet worksheet, in int rowId)
+        {
+            worksheet.CreateRow(rowId);
+        }
+
+        private void ExportRow(IList<TranslationData> rowData, ISheet worksheet, in int rowId)
+        {
+            var row = worksheet.CreateRow(rowId);
+
+            for (var columnIndex = rowData.Min(rd => rd.ColumnId);
+                columnIndex <= rowData.Max(rd => rd.ColumnId);
+                ++columnIndex)
+            {
+                var cellData = rowData.SingleOrDefault(rd => rd.ColumnId == columnIndex);
+
+                if (cellData == null)
+                {
+                    row.CreateCell(columnIndex, CellType.Blank);
+                }
                 else
-                    InsertDummyRow(workbook);
+                {
+                    var cell = row.CreateCell(columnIndex, CellType.String);
+                    cell.SetCellValue(cellData.Text);
+                }
             }
         }
 
@@ -64,7 +116,7 @@ namespace ExcelCellTranslator
             using var data = command.ExecuteReader();
             var translated = new List<TranslationData>();
 
-            while (data.NextResult())
+            while (data.Read())
             {
                 var cellData = new TranslationData(rowStats.SheetName, rowStats.RowId,
                     int.Parse(data["ColumnId"].ToString()), data["Text"].ToString());
@@ -84,7 +136,7 @@ namespace ExcelCellTranslator
 
             var stats = new List<ImportedRowStatistics>();
 
-            while (data.NextResult())
+            while (data.Read())
             {
                 stats.Add(new ImportedRowStatistics(data["SheetName"].ToString(), int.Parse(data["RowId"].ToString()),
                     int.Parse(data["CellCount"].ToString())));
@@ -92,17 +144,5 @@ namespace ExcelCellTranslator
 
             return stats;
         }
-
-        //private IList<TranslationData> ExportBatch(IList<TranslationData> batch, IWorkbook workbook)
-        //{
-        //    foreach (var workItem in batch)
-        //    {
-                
-        //    }
-
-        //    return translated;
-        //}
-
-        
     }
 }

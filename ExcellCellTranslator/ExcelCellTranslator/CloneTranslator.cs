@@ -11,5 +11,10 @@ namespace ExcelCellTranslator
         {
             return new List<string>(inputs);
         }
+
+        public string Translate(string input)
+        {
+            return input;
+        }
     }
 }

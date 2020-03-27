@@ -24,7 +24,7 @@ namespace ExcelService
             {
                 var inputSheet = InputWorkbook.GetSheetAt(sheetIndex);
 
-                this.FeedbackReceiver.Message($"Processing sheet {sheetIndex + 1} of {numSheets}");
+                this.FeedbackReceiver.Message($"Importing sheet {sheetIndex + 1} of {numSheets}");
                 this.IterateCellsInSheet(inputSheet);
             }
         }
@@ -36,7 +36,7 @@ namespace ExcelService
             {
                 var inputRow = inputSheet.GetRow(rowIndex);
 
-                this.FeedbackReceiver.Message($"Processing row {rowIndex + 1} of {numRows}");
+                this.FeedbackReceiver.Message($"Importing row {rowIndex + 1} of {numRows}");
                 this.IterateCellsInRow(inputRow);
             }
         }

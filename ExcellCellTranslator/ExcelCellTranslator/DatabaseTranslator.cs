@@ -28,7 +28,7 @@ namespace ExcelCellTranslator
 
             var batch = new List<TranslationData>();
 
-            while (data.NextResult())
+            while (data.Read())
             {
                 batch.Add(new TranslationData(data["SheetName"].ToString(), int.Parse(data["RowId"].ToString()),
                     int.Parse(data["ColumnId"].ToString()), data["Text"].ToString()));
