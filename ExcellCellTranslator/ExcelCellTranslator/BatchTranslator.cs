@@ -38,7 +38,7 @@ namespace ExcelCellTranslator
             {
                 var batch = GetNextProcessingBatch(CommandBuilder.GenerateGetNextImportedBatchCommand);
 
-                continueProcessing = batch.Count > 0;
+                continueProcessing = batch?.Count > 0;
 
                 if (continueProcessing)
                 {

@@ -19,7 +19,7 @@ namespace ExcelCellTranslator
 
         public bool ContainsSwitch(string switchName)
         {
-            return Switches.Any(sw => string.CompareOrdinal(sw, switchName) == 0);
+            return Switches.Any(sw => string.Compare(sw, switchName, StringComparison.Ordinal) == 0);
         }
 
         public static ProcessedArguments Process(string[] arguments)
@@ -31,7 +31,7 @@ namespace ExcelCellTranslator
             {
                 if (argument.StartsWith('-') || argument.StartsWith('/'))
                 {
-                    var thisSwitch = argument.TrimStart('-', '/').ToLower();
+                    var thisSwitch = argument.TrimStart('-', '/');
                     if (!string.IsNullOrEmpty(thisSwitch))
                         switches.Add(thisSwitch);
                 }
@@ -42,6 +42,11 @@ namespace ExcelCellTranslator
             }
 
             return new ProcessedArguments(switches, filenames);
+        }
+
+        public static ProcessedArguments Create(IList<string> fileNames, IEnumerable<string> switches)
+        {
+            return new ProcessedArguments(switches.ToList(), fileNames);
         }
     }
 }

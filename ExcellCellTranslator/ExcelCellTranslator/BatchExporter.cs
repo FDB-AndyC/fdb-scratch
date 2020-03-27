@@ -27,7 +27,7 @@ namespace ExcelCellTranslator
 
             if (stats == null)
             {
-                FeedbackReceiver.Message("Nothing to process");
+                FeedbackReceiver.Message("Nothing to export");
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace ExcelCellTranslator
 
         private void ProcessRow(ImportedRowStatistics rowStats, in int rowId, ISheet worksheet)
         {
-            FeedbackReceiver.Message($"Processing row {rowStats.SheetName}.{rowStats.RowId} ({rowStats.CellCount} cells)");
+            FeedbackReceiver.Message($"Exporting row {rowStats.SheetName}.{rowStats.RowId} ({rowStats.CellCount} cells)");
             var rowData = FetchRowData(rowStats);
 
             if (rowId != rowStats.RowId)

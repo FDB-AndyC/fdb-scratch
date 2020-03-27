@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ExcelCellTranslator;
 using NUnit.Framework;
 
@@ -108,14 +109,14 @@ namespace ExcelCellTranslatorTests
         }
 
         [Test]
-        public void WhenProcessingThenSwitchesAreMadeLowerCase()
+        public void WhenProcessingThenSwitchesRetainCasing()
         {
             var inputs = new[] {"--One", "/TWO", "-three"};
             var processed = ProcessedArguments.Process(inputs);
 
-            Assert.AreEqual("one", processed.Switches.First(), "Expecting switches to be made lower case");
-            Assert.AreEqual("two", processed.Switches.Skip(1).First(), "Expecting switches to be made lower case");
-            Assert.AreEqual("three", processed.Switches.Last(), "Expecting switches to be made lower case");
+            Assert.IsTrue(string.Compare("One", processed.Switches.First(), StringComparison.Ordinal) == 0, "Expecting switches to be made lower case");
+            Assert.IsTrue(string.Compare("TWO", processed.Switches.Skip(1).First(), StringComparison.Ordinal) == 0, "Expecting switches to be made lower case");
+            Assert.IsTrue(string.Compare("three", processed.Switches.Last(), StringComparison.Ordinal) == 0, "Expecting switches to be made lower case");
         }
 
         [Test]

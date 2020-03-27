@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using ExcelService;
-using Google;
 using TranslationService;
 
 namespace ExcelCellTranslator
 {
     class Program
     {
-        private const string DbConnectionString =
-            "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1";
+        //private const string DbConnectionString =
+        //    "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1";
 
         static void Main(string[] args)
         {
@@ -24,7 +21,8 @@ namespace ExcelCellTranslator
 
             if (arguments.Filenames.Count == 2)
             {
-                var connection = new SqlConnection(DbConnectionString);
+                var connectionString = ArgumentsExtractor.ExtractDatabaseConnectionString(ref arguments);
+                var connection = new SqlConnection(connectionString);
                 var executors = GetProcessorsFromArguments(arguments, feedbackReceiver,
                     connection, translator);
 
