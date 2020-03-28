@@ -9,9 +9,6 @@ namespace ExcelCellTranslator
 {
     class Program
     {
-        //private const string DbConnectionString =
-        //    "Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1";
-
         static void Main(string[] args)
         {
             IFeedbackReceiver feedbackReceiver = new ConsoleFeedbackReceiver();

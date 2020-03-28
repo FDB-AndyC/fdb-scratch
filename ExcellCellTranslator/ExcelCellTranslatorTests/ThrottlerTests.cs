@@ -10,7 +10,6 @@ namespace ExcelCellTranslatorTests
     public class ThrottlerTests
     {
         private int ExecuteCallCounter;
-        private int GetTimeCallCounter;
 
         [SetUp]
         public void Setup()
@@ -39,7 +38,6 @@ namespace ExcelCellTranslatorTests
             var dummyDate = new DateTime(1974, 3, 14, 5, 30, 18);
             var throttler = new ThroughputThrottler(mockClock.Object, mockDelayer.Object);
             var executeData = new List<string>(new[] {"first", "second", "third"});
-            var isFirstExecution = true;
 
             // arrange
             mockClock
@@ -60,7 +58,7 @@ namespace ExcelCellTranslatorTests
                 .Setup(d => d.Delay(It.IsAny<TimeSpan>()))
                 .Verifiable();
 
-            this.ExecuteCallCounter = this.GetTimeCallCounter = 0;
+            this.ExecuteCallCounter = 0;
 
             // act
             var results = throttler.Execute(ThrottlerActionFunc, executeData);
