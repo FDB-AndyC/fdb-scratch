@@ -66,10 +66,23 @@ namespace ExcelCellTranslator
 
             foreach (var workItem in batch)
             {
-                translated.Add(workItem.Morph(ExecuteTranslate(workItem.Text)));
+                var cached = GetCachedOrDefault(workItem.Text);
+
+                translated.Add(workItem.Morph(cached ?? ExecuteTranslate(workItem.Text)));
             }
 
             return translated;
+        }
+
+        private string GetCachedOrDefault(string text)
+        {
+            using var command = CachedConnection.GenerateGetTranslationCommand(text);
+            var returned = command.ExecuteScalar();
+
+            if (returned != null && !returned.Equals(DBNull.Value))
+                return returned.ToString();
+
+            return null;
         }
 
         private string ExecuteTranslate(string source)

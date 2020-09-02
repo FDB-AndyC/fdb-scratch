@@ -31,7 +31,7 @@ namespace ExcelCellTranslator
             var command = connection.CreateCommand();
 
             command.CommandText =
-                $"SELECT TOP({batchSize}) [i].[SheetName], [i].[RowId], [i].[ColumnId], [i].[Text] FROM [Translations].[dbo].[Imported] AS[i] LEFT OUTER JOIN [Processed] AS[p] ON[i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId] WHERE p.[Text] IS NULL AND NOT ([i].[Text] IS NULL)";
+                $"SELECT TOP({batchSize}) [i].[SheetName], [i].[RowId], [i].[ColumnId], [i].[Text] FROM [Imported] AS[i] LEFT OUTER JOIN [Processed] AS [p] O N[i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId] WHERE p.[Text] IS NULL AND NOT ([i].[Text] IS NULL)";
 
             return command;
         }
@@ -71,6 +71,18 @@ namespace ExcelCellTranslator
 
             command.CommandText =
                 "SELECT [SheetName], [RowId], COUNT([ColumnId]) As [CellCount] FROM [Imported] GROUP BY [SheetName], [RowId]";
+
+            return command;
+        }
+
+        public static SqlCommand GenerateGetTranslationCommand(this SqlConnection connection, string text)
+        {
+            var command = connection.CreateCommand();
+
+            command.CommandText =
+                "SELECT TOP 1 [p].[Text] FROM [Imported] AS [i] LEFT OUTER JOIN [Processed] AS [p] ON [i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId] WHERE [i].[Text] = @ToTranslate AND NOT([p].[Text] IS NULL)";
+
+            command.Parameters.Add("ToTranslate", SqlDbType.NVarChar, -1).Value = text;
 
             return command;
         }
