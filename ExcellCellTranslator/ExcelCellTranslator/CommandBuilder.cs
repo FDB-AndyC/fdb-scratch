@@ -31,7 +31,7 @@ namespace ExcelCellTranslator
             var command = connection.CreateCommand();
 
             command.CommandText =
-                $"SELECT TOP({batchSize}) [i].[SheetName], [i].[RowId], [i].[ColumnId], [i].[Text] FROM [Imported] AS[i] LEFT OUTER JOIN [Processed] AS [p] O N[i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId] WHERE p.[Text] IS NULL AND NOT ([i].[Text] IS NULL)";
+                $"SELECT TOP({batchSize}) [i].[SheetName], [i].[RowId], [i].[ColumnId], [i].[Text] FROM [Imported] AS [i] LEFT OUTER JOIN [Processed] AS [p] ON [i].[SheetName] = [p].[SheetName] AND [i].[RowId] = [p].[RowId] AND [i].[ColumnId] = [p].[ColumnId] WHERE p.[Text] IS NULL AND NOT ([i].[Text] IS NULL)";
 
             return command;
         }
@@ -70,7 +70,7 @@ namespace ExcelCellTranslator
             var command = connection.CreateCommand();
 
             command.CommandText =
-                "SELECT [SheetName], [RowId], COUNT([ColumnId]) As [CellCount] FROM [Imported] GROUP BY [SheetName], [RowId]";
+                "SELECT [SheetName], [RowId], COUNT([ColumnId]) As [CellCount] FROM [Imported] GROUP BY [SheetName], [RowId] ORDER BY [SheetName], [RowId]";
 
             return command;
         }

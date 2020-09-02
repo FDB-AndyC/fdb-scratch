@@ -2,7 +2,7 @@
   "profiles": {
     "ExcelCellTranslator": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\CollyerAn01\\Desktop\\Chongqing insurance drug list 201909s type code 11 chunk 1.xlsx\" \"C:\\Users\\collyeran01\\Desktop\\Chongqing output.xlsx\" \"-db=Data Source=.\\SQL2019;Initial Catalog=Translations;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1\""
+      "commandLineArgs": "\"C:\\Users\\CollyerAn01\\Desktop\\Chongqing insurance drug list 201909s type code 11.xlsx\" \"C:\\Users\\collyeran01\\Desktop\\Chongqing output.xlsx\" \"-db=Data Source=.\\SQL2017;Initial Catalog=Translate;Persist Security Info=True;User ID=TranslationService;Password=c3rqHUoews!6EyyZ#iK1\" -export"
     }
   }
 }
