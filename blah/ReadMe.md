@@ -1,4 +1,3 @@
 # blah
 
-And some develop text.
-
+And some feature text.
