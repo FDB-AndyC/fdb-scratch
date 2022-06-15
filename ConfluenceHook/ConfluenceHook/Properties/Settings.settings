@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ConfluenceHook.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AppointmentTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">This is my hello world template.</Value>
+    </Setting>
+    <Setting Name="ApiBase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://hearsthealth.atlassian.net/wiki/rest/api/</Value>
+    </Setting>
+    <Setting Name="TemplatePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">template/{id}</Value>
+    </Setting>
+    <Setting Name="TemplateId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1151238359</Value>
+    </Setting>
+    <Setting Name="ApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">YWNvbGx5ZXJAaGVhcnN0LmNvbTprenZ6d1dMeTM2QzVMSUJhdzBSWjVFOTI=</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
